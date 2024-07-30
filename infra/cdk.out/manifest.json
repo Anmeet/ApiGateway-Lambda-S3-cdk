@@ -1,0 +1,137 @@
+{
+  "version": "36.0.0",
+  "artifacts": {
+    "bankingstatusapp619.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "bankingstatusapp619.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "bankingstatusapp619": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "bankingstatusapp619.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f2f830577a7ca4bec78c5d78680b5f72de696ae6d3cf305b3f77476b421e4ca3.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "bankingstatusapp619.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "bankingstatusapp619.assets"
+      ],
+      "metadata": {
+        "/bankingstatusapp619/s3bucketlogicalId619/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "s3bucketlogicalId6190F43A43C"
+          }
+        ],
+        "/bankingstatusapp619/imbalancerole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "imbalancerole778FA7F1"
+          }
+        ],
+        "/bankingstatusapp619/bankingLambdaFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "bankingLambdaFunction4A305B96"
+          }
+        ],
+        "/bankingstatusapp619/bankingrestapi/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "bankingrestapi122344F4"
+          }
+        ],
+        "/bankingstatusapp619/bankingrestapi/Deployment/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "bankingrestapiDeploymentDB662647cc2ae43a0d54b3fb79d47aea92987cac"
+          }
+        ],
+        "/bankingstatusapp619/bankingrestapi/DeploymentStage.prod/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "bankingrestapiDeploymentStageprod2C0AB406"
+          }
+        ],
+        "/bankingstatusapp619/bankingrestapi/Endpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "bankingrestapiEndpoint89771746"
+          }
+        ],
+        "/bankingstatusapp619/bankingrestapi/Default/bankstatus/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "bankingrestapibankstatusA845698F"
+          }
+        ],
+        "/bankingstatusapp619/bankingrestapi/Default/bankstatus/GET/ApiPermission.bankingstatusapp619bankingrestapiC3620E90.GET..bankstatus": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "bankingrestapibankstatusGETApiPermissionbankingstatusapp619bankingrestapiC3620E90GETbankstatus461F4B04"
+          }
+        ],
+        "/bankingstatusapp619/bankingrestapi/Default/bankstatus/GET/ApiPermission.Test.bankingstatusapp619bankingrestapiC3620E90.GET..bankstatus": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "bankingrestapibankstatusGETApiPermissionTestbankingstatusapp619bankingrestapiC3620E90GETbankstatusF3BFE9B8"
+          }
+        ],
+        "/bankingstatusapp619/bankingrestapi/Default/bankstatus/GET/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "bankingrestapibankstatusGET3862380E"
+          }
+        ],
+        "/bankingstatusapp619/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/bankingstatusapp619/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/bankingstatusapp619/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/bankingstatusapp619/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "bankingstatusapp619"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}

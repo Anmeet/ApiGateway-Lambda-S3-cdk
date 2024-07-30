@@ -1,0 +1,19 @@
+{
+  "version": "36.0.0",
+  "files": {
+    "e9ce0ab2db3d012b66fcd82d13f5ad042eb47730285efbe804e20908ba6226b0": {
+      "source": {
+        "path": "Ibankingstatusapp02.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-current_region": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "e9ce0ab2db3d012b66fcd82d13f5ad042eb47730285efbe804e20908ba6226b0.json",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

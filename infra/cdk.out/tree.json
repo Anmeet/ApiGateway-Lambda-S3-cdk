@@ -1,0 +1,503 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "bankingstatusapp619": {
+        "id": "bankingstatusapp619",
+        "path": "bankingstatusapp619",
+        "children": {
+          "s3bucketlogicalId619": {
+            "id": "s3bucketlogicalId619",
+            "path": "bankingstatusapp619/s3bucketlogicalId619",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "bankingstatusapp619/s3bucketlogicalId619/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::S3::Bucket",
+                  "aws:cdk:cloudformation:props": {
+                    "bucketName": "balancestatus619"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3.CfnBucket",
+                  "version": "2.150.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_s3.Bucket",
+              "version": "2.150.0"
+            }
+          },
+          "imbalancerole": {
+            "id": "imbalancerole",
+            "path": "bankingstatusapp619/imbalancerole",
+            "children": {
+              "Importimbalancerole": {
+                "id": "Importimbalancerole",
+                "path": "bankingstatusapp619/imbalancerole/Importimbalancerole",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.150.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "bankingstatusapp619/imbalancerole/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                  "aws:cdk:cloudformation:props": {
+                    "assumeRolePolicyDocument": {
+                      "Statement": [
+                        {
+                          "Action": "sts:AssumeRole",
+                          "Effect": "Allow",
+                          "Principal": {
+                            "Service": "lambda.amazonaws.com"
+                          }
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    },
+                    "description": "role for lambda to access s3 bucket",
+                    "managedPolicyArns": [
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":iam::aws:policy/AmazonS3FullAccess"
+                          ]
+                        ]
+                      }
+                    ],
+                    "roleName": "banklambdaRole"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                  "version": "2.150.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.Role",
+              "version": "2.150.0"
+            }
+          },
+          "bankingLambdaFunction": {
+            "id": "bankingLambdaFunction",
+            "path": "bankingstatusapp619/bankingLambdaFunction",
+            "children": {
+              "Code": {
+                "id": "Code",
+                "path": "bankingstatusapp619/bankingLambdaFunction/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "bankingstatusapp619/bankingLambdaFunction/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.150.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "bankingstatusapp619/bankingLambdaFunction/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.150.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.150.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "bankingstatusapp619/bankingLambdaFunction/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": {
+                        "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+                      },
+                      "s3Key": "4bcb83027f933d0171678e9c8508b373eeee5dc8456a8fbe9a65aa206b36177d.zip"
+                    },
+                    "handler": "lambda_function.handler",
+                    "role": {
+                      "Fn::GetAtt": [
+                        "imbalancerole778FA7F1",
+                        "Arn"
+                      ]
+                    },
+                    "runtime": "nodejs16.x"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.150.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.150.0"
+            }
+          },
+          "bankingrestapi": {
+            "id": "bankingrestapi",
+            "path": "bankingstatusapp619/bankingrestapi",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "bankingstatusapp619/bankingrestapi/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ApiGateway::RestApi",
+                  "aws:cdk:cloudformation:props": {
+                    "name": "bankingrestapi"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.CfnRestApi",
+                  "version": "2.150.0"
+                }
+              },
+              "Deployment": {
+                "id": "Deployment",
+                "path": "bankingstatusapp619/bankingrestapi/Deployment",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "bankingstatusapp619/bankingrestapi/Deployment/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGateway::Deployment",
+                      "aws:cdk:cloudformation:props": {
+                        "description": "Automatically created by the RestApi construct",
+                        "restApiId": {
+                          "Ref": "bankingrestapi122344F4"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.CfnDeployment",
+                      "version": "2.150.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.Deployment",
+                  "version": "2.150.0"
+                }
+              },
+              "DeploymentStage.prod": {
+                "id": "DeploymentStage.prod",
+                "path": "bankingstatusapp619/bankingrestapi/DeploymentStage.prod",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "bankingstatusapp619/bankingrestapi/DeploymentStage.prod/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ApiGateway::Stage",
+                      "aws:cdk:cloudformation:props": {
+                        "deploymentId": {
+                          "Ref": "bankingrestapiDeploymentDB662647cc2ae43a0d54b3fb79d47aea92987cac"
+                        },
+                        "restApiId": {
+                          "Ref": "bankingrestapi122344F4"
+                        },
+                        "stageName": "prod"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.CfnStage",
+                      "version": "2.150.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.Stage",
+                  "version": "2.150.0"
+                }
+              },
+              "Endpoint": {
+                "id": "Endpoint",
+                "path": "bankingstatusapp619/bankingrestapi/Endpoint",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnOutput",
+                  "version": "2.150.0"
+                }
+              },
+              "Default": {
+                "id": "Default",
+                "path": "bankingstatusapp619/bankingrestapi/Default",
+                "children": {
+                  "bankstatus": {
+                    "id": "bankstatus",
+                    "path": "bankingstatusapp619/bankingrestapi/Default/bankstatus",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "bankingstatusapp619/bankingrestapi/Default/bankstatus/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ApiGateway::Resource",
+                          "aws:cdk:cloudformation:props": {
+                            "parentId": {
+                              "Fn::GetAtt": [
+                                "bankingrestapi122344F4",
+                                "RootResourceId"
+                              ]
+                            },
+                            "pathPart": "bankstatus",
+                            "restApiId": {
+                              "Ref": "bankingrestapi122344F4"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigateway.CfnResource",
+                          "version": "2.150.0"
+                        }
+                      },
+                      "GET": {
+                        "id": "GET",
+                        "path": "bankingstatusapp619/bankingrestapi/Default/bankstatus/GET",
+                        "children": {
+                          "ApiPermission.bankingstatusapp619bankingrestapiC3620E90.GET..bankstatus": {
+                            "id": "ApiPermission.bankingstatusapp619bankingrestapiC3620E90.GET..bankstatus",
+                            "path": "bankingstatusapp619/bankingrestapi/Default/bankstatus/GET/ApiPermission.bankingstatusapp619bankingrestapiC3620E90.GET..bankstatus",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                              "aws:cdk:cloudformation:props": {
+                                "action": "lambda:InvokeFunction",
+                                "functionName": {
+                                  "Fn::GetAtt": [
+                                    "bankingLambdaFunction4A305B96",
+                                    "Arn"
+                                  ]
+                                },
+                                "principal": "apigateway.amazonaws.com",
+                                "sourceArn": {
+                                  "Fn::Join": [
+                                    "",
+                                    [
+                                      "arn:",
+                                      {
+                                        "Ref": "AWS::Partition"
+                                      },
+                                      ":execute-api:",
+                                      {
+                                        "Ref": "AWS::Region"
+                                      },
+                                      ":",
+                                      {
+                                        "Ref": "AWS::AccountId"
+                                      },
+                                      ":",
+                                      {
+                                        "Ref": "bankingrestapi122344F4"
+                                      },
+                                      "/",
+                                      {
+                                        "Ref": "bankingrestapiDeploymentStageprod2C0AB406"
+                                      },
+                                      "/GET/bankstatus"
+                                    ]
+                                  ]
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                              "version": "2.150.0"
+                            }
+                          },
+                          "ApiPermission.Test.bankingstatusapp619bankingrestapiC3620E90.GET..bankstatus": {
+                            "id": "ApiPermission.Test.bankingstatusapp619bankingrestapiC3620E90.GET..bankstatus",
+                            "path": "bankingstatusapp619/bankingrestapi/Default/bankstatus/GET/ApiPermission.Test.bankingstatusapp619bankingrestapiC3620E90.GET..bankstatus",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                              "aws:cdk:cloudformation:props": {
+                                "action": "lambda:InvokeFunction",
+                                "functionName": {
+                                  "Fn::GetAtt": [
+                                    "bankingLambdaFunction4A305B96",
+                                    "Arn"
+                                  ]
+                                },
+                                "principal": "apigateway.amazonaws.com",
+                                "sourceArn": {
+                                  "Fn::Join": [
+                                    "",
+                                    [
+                                      "arn:",
+                                      {
+                                        "Ref": "AWS::Partition"
+                                      },
+                                      ":execute-api:",
+                                      {
+                                        "Ref": "AWS::Region"
+                                      },
+                                      ":",
+                                      {
+                                        "Ref": "AWS::AccountId"
+                                      },
+                                      ":",
+                                      {
+                                        "Ref": "bankingrestapi122344F4"
+                                      },
+                                      "/test-invoke-stage/GET/bankstatus"
+                                    ]
+                                  ]
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_lambda.CfnPermission",
+                              "version": "2.150.0"
+                            }
+                          },
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "bankingstatusapp619/bankingrestapi/Default/bankstatus/GET/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::ApiGateway::Method",
+                              "aws:cdk:cloudformation:props": {
+                                "authorizationType": "NONE",
+                                "httpMethod": "GET",
+                                "integration": {
+                                  "type": "AWS_PROXY",
+                                  "uri": {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":apigateway:",
+                                        {
+                                          "Ref": "AWS::Region"
+                                        },
+                                        ":lambda:path/2015-03-31/functions/",
+                                        {
+                                          "Fn::GetAtt": [
+                                            "bankingLambdaFunction4A305B96",
+                                            "Arn"
+                                          ]
+                                        },
+                                        "/invocations"
+                                      ]
+                                    ]
+                                  },
+                                  "integrationHttpMethod": "POST"
+                                },
+                                "resourceId": {
+                                  "Ref": "bankingrestapibankstatusA845698F"
+                                },
+                                "restApiId": {
+                                  "Ref": "bankingrestapi122344F4"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_apigateway.CfnMethod",
+                              "version": "2.150.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_apigateway.Method",
+                          "version": "2.150.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_apigateway.Resource",
+                      "version": "2.150.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_apigateway.ResourceBase",
+                  "version": "2.150.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_apigateway.LambdaRestApi",
+              "version": "2.150.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "bankingstatusapp619/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "bankingstatusapp619/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.150.0"
+                }
+              },
+              "Condition": {
+                "id": "Condition",
+                "path": "bankingstatusapp619/CDKMetadata/Condition",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnCondition",
+                  "version": "2.150.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.3.0"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "bankingstatusapp619/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.150.0"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "bankingstatusapp619/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.150.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.150.0"
+        }
+      },
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.3.0"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.150.0"
+    }
+  }
+}
